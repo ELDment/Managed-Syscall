@@ -52,11 +52,11 @@ if (status == 0) // NT_SUCCESS
 
 ## 高级用法
 
-当需要调用 `NtApi` 未封装的函数，可以通过 `Syscall.GetDelegate` 动态创建委托。
+当需要调用 `NtApi` 未封装的函数，可以通过 `Syscall.GetDelegate` 获取委托。
 
 ### 通过函数名获取
 
-这是最常见的用法。库会自动解析函数名对应的系统调用ID并创建委托。
+这是最常见的用法。库会自动解析函数名对应的系统调用ID并获取委托。
 
 ```csharp
 using ManagedSyscall;
@@ -81,7 +81,7 @@ var ntQuery = Syscall.GetDelegate<NtQuerySystemInformationDelegate>("NtQuerySyst
 
 ### 通过系统调用ID获取
 
-对于某些未导出的函数，且已知确切的系统调用ID时，可以直接通过ID创建委托。
+对于某些未导出的函数，且已知确切的系统调用ID时，可以直接通过ID获取委托。
 
 ```csharp
 using ManagedSyscall;
@@ -108,13 +108,13 @@ var ntClose = Syscall.GetDelegate<NtCloseDelegate>(ntCloseSyscallId);
 
 进入 `SyscallTester` 目录并执行以下命令：
 
-```bash
+```powershell
 dotnet run
 ```
 
 如果成功，控制台将会出现类似输出：
 
-```bash
+```powershell
 [1] Testing Memory APIs
   - Memory allocated at 0x2660000
   - Wrote 1337 to memory.
